@@ -592,10 +592,10 @@ class multipart_t
     }
 
     // get message part from front
-    const message_t &front() const { return m_parts.front(); }
+    const message_t &front() { return m_parts.front(); }
 
     // get message part from back
-    const message_t &back() const { return m_parts.back(); }
+    const message_t &back() { return m_parts.back(); }
 
     // Get pointer to a specific message part
     const message_t *peek(size_t index) const { return &m_parts[index]; }
@@ -709,34 +709,6 @@ class multipart_t
         return tmp;
     }
 
-#endif
-
-#if defined(ZMQ_BUILD_DRAFT_API) && ZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 2, 0)
-    uint32_t routing_id() const
-    {
-        return !empty() ? front().routing_id() : 0;
-    }
-
-    void set_routing_id(uint32_t routing_id)
-    {
-        for (auto& msg : m_parts)
-        {
-            msg.set_routing_id(routing_id);
-        }
-    }
-
-    const char* group() const
-    {
-        return !empty() ? front().group() : nullptr;
-    }
-
-    void set_group(const char* group)
-    {
-        for (auto& msg : m_parts)
-        {
-            msg.set_group(group);
-        }
-    }
 #endif
 
   private:
